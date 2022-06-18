@@ -19,6 +19,15 @@ docker run -d --name db -e POSTGRES_PASSWORD=password  -v /opt/postgres:/var/lib
  -p 5432:5432 postgres:13.6
 docker run -d -p 9000:9000 --name portainer -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer -H unix:///var/run/docker.sock
 ``` 
+### install Postgresql 12 using 20.04 ubuntu packages 
+```shell
+sudo apt update
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+```
+/etc/postgresql/12/main/postgresql.conf
+
+
 ### Postgresql 13
 Run portainer  
 ```shell
@@ -26,6 +35,7 @@ su postres
 psql
 CREATE DATABASE zabbix;
 CREATE ROLE zabbix WITH LOGIN ENCRYPTED PASSWORD 'zabbix';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO zabbix_proxy;
 ```
 #### Load the zabbix database 
 ```shell
@@ -44,3 +54,32 @@ zcat server.sql.gz | psql zabbix
 
 
 ### TimescaleDB yes or no 
+
+
+
+### Overnode 
+```
+# install overnode on all nodes
+wget --no-cache -O - https://overnode.org/install | sudo sh
+sudo overnode version
+sudo overnode upgrade
+```
+On node 1 
+```
+sudo apt -y install uuid
+uuid
+
+```
+## Debug Zabbix proxy 
+```shell
+wget https://ftp.postgresql.org/pub/source/v14.3/postgresql-14.3.tar.gz
+tar -zxvf postgresql-14.3.tar.gz 
+sudo apt update
+sudo reboot
+
+
+
+/usr/lib/postgresql/14/bin/pg_config
+/etc/postgresql/14/main/postgresql.conf
+
+```
