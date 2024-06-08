@@ -133,3 +133,6 @@ inventory
 
 # jetbrains
 .idea/
+
+# system-dev
+agenda.md
