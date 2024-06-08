@@ -7,7 +7,7 @@ import threading
 def write_file(file_path, size_mb):
     """Write a file of the specified size in MB."""
     with open(file_path, 'wb') as f:
-        f.write(os.urandom(size_mb * 1024 * 1024))
+        f.write(os.urandom(size_mb * 1024 * 1024 ))
 
 
 def read_file(file_path):
@@ -65,8 +65,8 @@ def clean_up(directory):
 if __name__ == "__main__":
     directory = "/home/ubuntu/test"  # Specify the directory to perform the stress test
     target_usage = 85  # Target disk usage percentage
-    file_size_mb = 100  # Size of each test file in MB
-    duration = 600  # Duration of the stress test in seconds (e.g., 10 minutes)
+    file_size_mb = 200  # Size of each test file in MB
+    duration = 120  # Duration of the stress test in seconds (e.g., 10 minutes)
 
     print(f"Starting disk fill to reach {target_usage}% usage")
     fill_disk_to_target(directory, target_usage, file_size_mb)
