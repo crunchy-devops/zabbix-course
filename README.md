@@ -18,6 +18,7 @@ docker volume create data
 docker volume ls
 docker run -d \
 	--name db \
+	--restart=always \
 	-e POSTGRES_PASSWORD=password \
 	-e PGDATA=/var/lib/postgresql/data/pgdata \
 	-v data:/var/lib/postgresql/data \
