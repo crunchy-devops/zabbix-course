@@ -1,30 +1,33 @@
 # Zabbix-course
 
-## Pre-requis installation
+## Pre-requis installation on ubuntu 24.04
 ```shell
-wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu22.04_all.deb
-sudo dpkg -i zabbix-release_7.0-1+ubuntu22.04_all.deb
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu24.04_all.deb
+sudo dpkg -i zabbix-release_7.0-1+ubuntu24.04_all.deb
 sudo apt update 
-sudo apt -y install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+sudo apt install zabbix-server-pgsql zabbix-frontend-php php8.3-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
 ```
 ### Rappel Docker
 install docker   
 ```shell
-sudo apt install -y docker.io
-sudo usermod -aG docker ubuntu
+sudo apt update && sudo apt upgrade
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt install -y docker-ce
+sudo usermod -aG docker ubuntu 
+      
 # reload jetbrains
 
 docker volume create data
 docker volume ls
 docker run -d \
 	--name db \
-	--restart=always \
-	-e POSTGRES_PASSWORD=password \
-	-e PGDATA=/var/lib/postgresql/data/pgdata \
-	-v data:/var/lib/postgresql/data \
+	-e POSTGRESQL_PASSWORD=Tcwowa12 \
+	-v data:/bitnami/postgresql \
+	-v /home/ubuntu/postgres_air_2023.sql:/tmp/postgres_air_2023.sql \
 	-p 32432:5432 \
-	-p 5432:5432 \
-	postgres
+	bitnami/postgresql:latest
 
 docker volume create portainer_data
 docker run -d -p 32125:8000 -p 32126:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock \
@@ -86,28 +89,9 @@ pip3 install --upgrade pip # update pip3
 pip3 install requests # extra packages
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## install proxy
 ```shell
-sudo apt update
-wget https://repo.zabbix.com/zabbix/6.1/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.1-1+ubuntu20.04_all.deb
-sudo dpkg -i zabbix-release_6.1-1+ubuntu20.04_all.deb
-sudo apt update
-sudo apt install -y zabbix-proxy-sqlite3 zabbix-sql-scripts
-sudo mkdir –p /var/lib/sqlite/
-sudo sqlite3 /var/lib/sqlite/zabbix.db < /usr/share/doc/zabbix-sql-scripts/sqlite3/proxy.sql
-sudo chmod -R 777  /var/lib/sqlite
+
 ```
 
 ## Change zabbix_proxy.conf
